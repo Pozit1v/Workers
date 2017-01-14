@@ -1,0 +1,57 @@
+﻿@model Worker
+
+@{
+    ViewBag.Title = "DeleteWorker";
+}
+
+<h2>Удалить сотрудника</h2>
+
+<h3>Вы действительно хотите удалить сотрудника?</h3>
+<div>
+    <h4>Сотрудник</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Имя
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Firstname)
+        </dd>
+
+        <dt>
+            Фамилия
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            Отчество
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+
+        <dt>
+            Должность
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

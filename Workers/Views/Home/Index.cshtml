@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Worker>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div id="dialog"></div>
+<div id="mainList">
+    <h3>Список работников</h3>
+    <button onclick="addWorker()">Добавить Сотрудника</button>
+    <table class="table">
+        <tr>
+            <td><p>Имя</p></td>
+            <td><p>Фамилия</p></td>
+            <td><p>Отчество</p></td>
+            <td><p>Должность</p></td>
+            <td><p>Руководитель</p></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        @foreach (var w in Model)
+        {
+            <tr>
+                <td><p>@w.Firstname</p></td>
+                <td><p>@w.Surname</p></td>
+                <td><p>@w.Patronymic</p></td>
+                <td><p>@w.Position</p></td>
+                <td><p>@w.ChiefName</p></td>
+                <td><a style="cursor:pointer" id="@w.Id" onclick="editWorker(this)">Редактировать</a></td>
+                <td><a style="cursor:pointer" id="@w.Id" onclick="deleteWorker(this)">Удалить</a></td>
+            </tr>
+
+        }
+    </table>
+    <div>
+        
+    </div>    
+</div>
+
+<script type="text/javascript">
+
+    function addWorker() {
+        $('#mainList').attr("style", "display:none");
+
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("AddWorker","Home")',
+            success: function (data) {
+                $("#dialog").html(data);
+                $("#dialog").dialog({
+                    modal: true
+                });
+            }
+        });
+    }
+
+    function editWorker(obj) {
+        var id = obj.id;
+        $.ajax({
+            type: "get",
+            url: 'Home/EditWorker/' + id,
+            success: function (data) {
+                $("#dialog").html(data);
+                $("#dialog").dialog({
+                    modal: true
+                });
+            }
+        });
+    }
+
+    function deleteWorker(obj) {
+        var id = obj.id;
+        $.ajax({
+            type: "get",
+            url: 'Home/DeleteWorker/' + id,
+            success: function (data) {
+                $("#dialog").html(data);
+                $("#dialog").dialog({
+                    modal: true
+                });
+            }
+        });
+    }
+</script>
